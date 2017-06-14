@@ -1,9 +1,15 @@
 ﻿using MediatR;
+using MediatrExample.Domain.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using FluentValidation.AspNetCore;
+using MediatrExample.Domain.Models;
+using FluentValidation;
+using MediatrExample.Domain.Interfaces;
+using MediatrExample.Domain.Repositories;
 
 namespace MediatrExample.Api
 {
@@ -27,6 +33,8 @@ namespace MediatrExample.Api
             // Add framework services.
             services.AddMvc();
             services.AddMediatR();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

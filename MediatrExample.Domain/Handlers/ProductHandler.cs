@@ -1,30 +1,26 @@
 ﻿using MediatR;
+using MediatrExample.Domain.Interfaces;
 using MediatrExample.Domain.Models;
 
 namespace MediatrExample.Domain.Handlers
 {
-    public class ProductHandler : IRequestHandler<Product, string>
+    public class ProductHandler : IRequestHandler<Product, Response>
     {
         private readonly IMediator _mediatr;
+        private readonly IProductRepository _productRepository;
 
-        public ProductHandler(IMediator mediatr)
+        public ProductHandler(IMediator mediatr, IProductRepository productRepository)
         {
             _mediatr = mediatr;
+            _productRepository = productRepository;
         }
 
-        public string Handle(Product message)
+        public Response Handle(Product message)
         {
-            //Faço as validações dos campos da mensagem que no caso é o Produto
-            if (string.IsNullOrEmpty(message.Name) && message.Price == 0)
-                return "Preencher todos os campos.";
+            //Salvo o produto no repositório.
+            _productRepository.Save(message);
 
-            //Depois de feito as validações do Produto, agora podemos salva-lo em nosso repositório.
-            //productRepository.Save(message);
-
-            //Enviar notificação de produto inserido
-            _mediatr.Publish(message);
-
-            return "Produto inserido com sucesso.";
+            return new Response(new { message = "Produto inserido com sucessio." });
         }
     }
 }

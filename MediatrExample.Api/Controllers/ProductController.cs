@@ -18,7 +18,7 @@ namespace MediatrExample.Api.Controllers
         public IActionResult Post([FromBody]Product message)
         {
             var response = _mediatr.Send(message);
-            return Ok(response);
+            return Ok(response.Result);
         }
     }
 }
