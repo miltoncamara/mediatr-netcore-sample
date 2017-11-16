@@ -1,4 +1,4 @@
-﻿using FluentValidator;
+﻿using Flunt.Notifications;
 using System;
 
 namespace MediatrExample.Domain.Models

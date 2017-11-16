@@ -8,7 +8,7 @@ namespace MediatrExample.Domain.Services
     {
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next)
         {
-            if (!((EntityBase)request).IsValid())
+            if (!((EntityBase)request).Valid)
             {
                 var response = (TResponse)new Response(((EntityBase)request).Notifications, true);
                 return response;

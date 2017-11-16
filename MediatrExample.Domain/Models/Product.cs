@@ -1,9 +1,9 @@
-﻿using MediatR;
-using FluentValidator;
+﻿using Flunt.Validations;
+using MediatR;
 
 namespace MediatrExample.Domain.Models
 {
-    public class Product : EntityBase, IRequest<Response>, INotification
+    public class Product : EntityBase, IRequest<Response>, INotification, IValidatable
     {
         public string Name { get; set; }
         public decimal Price { get; set; }
@@ -13,9 +13,15 @@ namespace MediatrExample.Domain.Models
             this.Name = name;
             this.Price = price;
 
-            new ValidationContract<Product>(this)
-                .IsRequired(x => x.Name, "Nome do produto obrigatório")
-                .IsGreaterOrEqualsThan(x => x.Price, 0, "Valor deve ser maior que zero."); 
+            AddNotifications(new Contract()
+                   .IsNotNullOrEmpty(name, "Name", "Nome não pode ficar em branco")
+                   .IsGreaterOrEqualsThan(price, 0, "Price", "Valor deve ser maior que zero.")
+               );
+        }
+
+        public void Validate()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
