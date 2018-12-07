@@ -7,6 +7,7 @@ namespace MediatrExample.Domain.Models
     {
         public string Name { get; set; }
         public decimal Price { get; set; }
+        public string Category { get; set; }
 
         public Product(string name, decimal price)
         {
