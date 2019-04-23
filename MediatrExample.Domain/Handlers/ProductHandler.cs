@@ -20,7 +20,7 @@ namespace MediatrExample.Domain.Handlers
             //Salvo o produto no repositório.
             _productRepository.Save(message);
 
-            return new Response(new { message = "Produto inserido com sucessio." });
+            return new Response(new { message = "Produto inserido com sucesso." });
         }
     }
 }
